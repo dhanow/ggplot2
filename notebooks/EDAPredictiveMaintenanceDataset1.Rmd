@@ -1,0 +1,176 @@
+---
+title: "EDA Predictive Maintenance dataset1"
+knit: (function(input_file, encoding) {
+  out_dir <- '../docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+author: "Sridhar Kothalanka"
+date: "2/20/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+# Overview
+In the below exercise EDA is performed on a predictive maintenance data set to understand the data
+
+## Steps
+1. Load the necessary R libraries
+2. Load the average utilization summary data
+3. Plot the average utilization summary data
+4. Quick observations
+5. A closer look at each of the 2 stations
+6. Station-1 how does the utilization look over a period of 1 year
+7. Quick observations on Station-1
+8. Station-2 how does the utilization look over a period of 1 year
+9. Quick observations on Station-2
+10. Station-1 and Station-2 side-by-side comparison
+
+### 1. Load the necessary R libraries
+```{r}
+library(ggplot2)
+library(magrittr)
+library(dplyr)
+library(tidyr)
+```
+
+### 2. Load the average utilization summary data
+
+The raw data sets consists of observations of two stations across 3 shifts and its utilization over a period of 1 year. The raw data was processed and features like "day of the week" was added to get a quick understanding of any plant behavior patterns.
+
+```{r}
+df1 <- read.csv("../data/eda-pm-ds1/station1n2-avgUtilization.csv")
+names(df1)[2]<-"avgUtilization"
+```
+
+### 3. Plot the average utilization summary data
+
+Plotting the average utilization of all stations for each day of the week help us to understand if there are any weekly cycles
+
+```{r}
+annotation  <- data.frame(x=c(6,7),y=c(17,5),label=c("reduced shifts?","holiday?"))
+df1 %>% 
+  ggplot(aes(x=factor(df1$weekDayName,levels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")), y=avgUtilization)) + 
+  geom_bar(stat="identity", width=0.5) +
+  xlab("Day of week") +
+  ylab("Average Utilization % \n(2 Stations and across 3 shifts)") +
+  geom_text(data=annotation, aes(x=x,y=y,label=label, color="red", size=7, angle=0, fontface="bold")) +
+  theme(legend.position = "none") +
+  ggtitle("Average Utilization per shift on each day of the week")
+
+```
+
+### 4. Quick observations
+What we can infer from the above plot is:
+
+1. On a Sunday there is little or no activity across the shifts, possibly it may be holiday
+2. On a Saturday there is some reduction in shifts as a result the average is lower then the rest of the week days
+
+### 5. A closer look at each of the 2 stations
+Let us take a closer look at each of the two stations independently
+
+* Station-1
+* Station-2
+
+and see how things show up
+
+### 6. Station-1 how does the utilization look over a period of 1 year?
+```{r}
+df2 <- read.csv("../data/eda-pm-ds1/station1.csv") %>%
+  gather(key="Shift",value="utilization","Shift1","Shift2","Shift3")
+df2$Shift <- factor(df2$Shift,levels=c("Shift1","Shift2","Shift3"))
+
+dfx <- df2 %>% filter(df2$Shift == "Shift1" & df2$weekDayName != "Sun") %>% select(utilization)
+shift1AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+dfx <- df2 %>% filter(df2$Shift == "Shift2" & df2$weekDayName != "Sun") %>% select(utilization)
+shift2AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+dfx <- df2 %>% filter(df2$Shift == "Shift3" & df2$weekDayName != "Sun") %>% select(utilization)
+shift3AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+
+df2 %>% 
+  ggplot(aes(x=factor(df2$weekDayName,levels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")), y=utilization,fill=Shift)) + 
+  geom_bar(position="dodge",stat="identity",width=0.6) +
+  ggtitle("Station1") +
+  ylab("Utilization %") +
+  xlab("Day of week") +
+  ylim(0,40) +
+  scale_fill_manual("legend", values = c("Shift1" = "#00BFC4", "Shift2" = "#7CAE00", "Shift3" = "#F8766D")) +
+  ggtitle("Station-1 utilization breakdown") +
+  theme(legend.title=element_blank()) +
+  annotate(geom="curve",x=6.5,y=8,xend=7.1, yend=5, curvature=0.3, arrow=arrow(length=unit(2,"mm"))) +
+  annotate(geom="text",x=6.25,y=12,label="shift3 utilization \ngoes up before \nworkweek",hjust="left") +
+  geom_hline(yintercept=shift1AvgExSun, linetype="dashed", color = "#00BFC4", size=1) +
+  geom_hline(yintercept=shift2AvgExSun, linetype="dashed", color = "#7CAE00", size=1) +
+  geom_hline(yintercept=shift3AvgExSun, linetype="dashed", color = "#F8766D", size=1) +
+  annotate(geom="text",x=6.75,y=shift1AvgExSun+1,label="avg (M-F)",hjust="left")
+  
+```
+
+### 7. Quick observations on Station-1
+1. Utilization is below 100%
+2. Shift 3 seems to be contributing more towards the decrease in utilization
+3. As before Saturday is running reduced shifts and Sunday may be a holiday
+
+
+### 8. Station-2 how does the utilization look over a period of 1 year?
+```{r}
+df3 <- read.csv("../data/eda-pm-ds1/station2.csv") %>%
+  gather(key="Shift",value="utilization","Shift1","Shift2","Shift3")
+df3$Shift <- factor(df3$Shift,levels=c("Shift1","Shift2","Shift3"))
+
+dfx <- df3 %>% filter(df3$Shift == "Shift1" & df3$weekDayName != "Sun") %>% select(utilization)
+shift1AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+dfx <- df3 %>% filter(df3$Shift == "Shift2" & df3$weekDayName != "Sun") %>% select(utilization)
+shift2AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+dfx <- df3 %>% filter(df3$Shift == "Shift3" & df3$weekDayName != "Sun") %>% select(utilization)
+shift3AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+
+df3 %>% 
+  ggplot(aes(x=factor(df3$weekDayName,levels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")), y=utilization,fill=Shift)) + 
+  geom_bar(position="dodge",stat="identity",width=0.6) +
+  ggtitle("Station1") +
+  ylab("Utilization %") +
+  xlab("Day of week") +
+  ylim(0,40) +
+  scale_fill_manual("legend", values = c("Shift1" = "#00BFC4", "Shift2" = "#7CAE00", "Shift3" = "#F8766D")) +
+  ggtitle("Station-2 utilization breakdown") +
+  theme(legend.title=element_blank()) +
+  annotate(geom="curve",x=6.5,y=12,xend=7.1, yend=10, curvature=0.3, arrow=arrow(length=unit(2,"mm"))) +
+  annotate(geom="text",x=6.25,y=16,label="shift3 utilization \ngoes up before \nworkweek",hjust="left") +
+  geom_hline(yintercept=shift1AvgExSun, linetype="dashed", color = "#00BFC4", size=1) +
+  geom_hline(yintercept=shift2AvgExSun, linetype="dashed", color = "#7CAE00", size=1) +
+  geom_hline(yintercept=shift3AvgExSun, linetype="dashed", color = "#F8766D", size=1) +
+  annotate(geom="text",x=6.75,y=shift1AvgExSun+1,label="avg (M-F)",hjust="left")
+```
+
+### 9. Quick observations on Station-2
+1. Utilization is below 100%
+2. Shift 3 seems to be contributing more towards the decrease in utilization
+3. As before Saturday is running reduced shifts and Sunday may be a holiday
+
+### 10. Station-1 and Station-2 side-by-side comparison
+
+```{r}
+df4 <- read.csv("../data/eda-pm-ds1/station1n2.csv") 
+df4$Station_ID[df4$Station_ID == 1] <- "Station-1"
+df4$Station_ID[df4$Station_ID == 2] <- "Station-2"
+df4$Shift[df4$Shift == 1] <- "Shift1"
+df4$Shift[df4$Shift == 2] <- "Shift2"
+df4$Shift[df4$Shift == 3] <- "Shift3"
+
+df4 %>% 
+  ggplot(aes(x=factor(df4$weekDayName,levels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")), y=avgUtilization,fill=Shift)) + 
+  geom_bar(position="dodge",stat="identity") +
+  ylab("Utilization %") +
+  xlab("Day of week") +
+  scale_fill_manual("legend", values = c("Shift1" = "#00BFC4", "Shift2" = "#7CAE00", "Shift3" = "#F8766D")) +
+  ggtitle("Station-1 and Station-2 side-by-side comparison") +
+  theme(legend.title=element_blank()) +
+  facet_grid(~Station_ID) 
+```  
+
+
