@@ -31,7 +31,7 @@ In the below exercise EDA is performed on a predictive maintenance data set to u
 10. Station-1 and Station-2 side-by-side comparison
 
 ### 1. Load the necessary R libraries
-```{r}
+```{r results="hide", message=FALSE, warning=FALSE, error=FALSE}
 library(ggplot2)
 library(magrittr)
 library(dplyr)
@@ -42,7 +42,7 @@ library(tidyr)
 
 The raw data sets consists of observations of two stations across 3 shifts and its utilization over a period of 1 year. The raw data was processed and features like "day of the week" was added to get a quick understanding of any plant behavior patterns.
 
-```{r}
+```{r tidy=TRUE}
 df1 <- read.csv("../data/eda-pm-ds1/station1n2-avgUtilization.csv")
 names(df1)[2]<-"avgUtilization"
 ```
@@ -51,7 +51,7 @@ names(df1)[2]<-"avgUtilization"
 
 Plotting the average utilization of all stations for each day of the week help us to understand if there are any weekly cycles
 
-```{r}
+```{r tidy=TRUE}
 annotation  <- data.frame(x=c(6,7),y=c(17,5),label=c("reduced shifts?","holiday?"))
 df1 %>% 
   ggplot(aes(x=factor(df1$weekDayName,levels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")), y=avgUtilization)) + 
@@ -79,7 +79,7 @@ Let us take a closer look at each of the two stations independently
 and see how things show up
 
 ### 6. Station-1 how does the utilization look over a period of 1 year?
-```{r}
+```{r tidy=TRUE}
 df2 <- read.csv("../data/eda-pm-ds1/station1.csv") %>%
   gather(key="Shift",value="utilization","Shift1","Shift2","Shift3")
 df2$Shift <- factor(df2$Shift,levels=c("Shift1","Shift2","Shift3"))
@@ -117,7 +117,7 @@ df2 %>%
 
 
 ### 8. Station-2 how does the utilization look over a period of 1 year?
-```{r}
+```{r tidy=TRUE}
 df3 <- read.csv("../data/eda-pm-ds1/station2.csv") %>%
   gather(key="Shift",value="utilization","Shift1","Shift2","Shift3")
 df3$Shift <- factor(df3$Shift,levels=c("Shift1","Shift2","Shift3"))
@@ -154,7 +154,7 @@ df3 %>%
 
 ### 10. Station-1 and Station-2 side-by-side comparison
 
-```{r}
+```{r tidy=TRUE}
 df4 <- read.csv("../data/eda-pm-ds1/station1n2.csv") 
 df4$Station_ID[df4$Station_ID == 1] <- "Station-1"
 df4$Station_ID[df4$Station_ID == 2] <- "Station-2"
