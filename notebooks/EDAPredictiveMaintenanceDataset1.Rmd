@@ -4,9 +4,9 @@ knit: (function(input_file, encoding) {
   out_dir <- '../docs';
   rmarkdown::render(input_file,
  encoding=encoding,
- output_file=file.path(dirname(input_file), out_dir, 'PlantMachineUtilizationAnalysis.html'))})
+ output_file=file.path(dirname(input_file), out_dir, 'PlantMachineUtilizationAnalysisV3.html'))})
 author: "Sridhar Kothalanka"
-date: "2/20/2020"
+date: "2/21/2020"
 output: html_document
 ---
 
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Overview
-In the below exercise EDA is performed on a predictive maintenance data set to understand the utilization of plant machines
+In the below exercise EDA is performed on a predictive maintenance data set to understand the utilization of plant machines. The goal is to look at the charts and find out any hidden patterns in the dataset and help ask more questions to the domain expert.
 
 ## Steps
 1. Load the necessary R libraries
