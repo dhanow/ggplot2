@@ -364,14 +364,14 @@ summary {
 
 <h1 class="title toc-ignore">Plant Machine Utilization analysis</h1>
 <h4 class="author">Sridhar Kothalanka</h4>
-<h4 class="date">2/20/2020</h4>
+<h4 class="date">2/21/2020</h4>
 
 </div>
 
 
 <div id="overview" class="section level1">
 <h1>Overview</h1>
-<p>In the below exercise EDA is performed on a predictive maintenance data set to understand the utilization of plant machines</p>
+<p>In the below exercise EDA is performed on a predictive maintenance data set to understand the utilization of plant machines. The goal is to look at the charts and find out any hidden patterns in the dataset and help ask more questions to the domain expert.</p>
 <div id="steps" class="section level2">
 <h2>Steps</h2>
 <ol style="list-style-type: decimal">
@@ -531,7 +531,7 @@ df4 %&gt;% ggplot(aes(x = factor(df4$weekDayName, levels = c(&quot;Mon&quot;, &q
 <div id="summary" class="section level3">
 <h3>11. Summary</h3>
 <ol style="list-style-type: decimal">
-<li>The dataset is limited in terms of the available features (only provides how the machines are utilized)</li>
+<li>The dataset is limited in terms of the available features (only provides information on how the machines are utilized)</li>
 <li>If the data set can include the raw data used to compute utilization that may help broaden the analysis</li>
 <li>Additional data (metrics) points associated with the machines itself will help to build predictive maintenance models</li>
 </ol>
