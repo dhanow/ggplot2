@@ -1,10 +1,10 @@
 ---
-title: "EDA Predictive Maintenance dataset1"
+title: "Plant Machine Utilization analysis"
 knit: (function(input_file, encoding) {
   out_dir <- '../docs';
   rmarkdown::render(input_file,
  encoding=encoding,
- output_file=file.path(dirname(input_file), out_dir, 'EDAPredictiveMaintenancedataset1.html'))})
+ output_file=file.path(dirname(input_file), out_dir, 'PlantMachineUtilizationAnalysis.html'))})
 author: "Sridhar Kothalanka"
 date: "2/20/2020"
 output: html_document
@@ -15,14 +15,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Overview
-In the below exercise EDA is performed on a predictive maintenance data set to understand the data
+In the below exercise EDA is performed on a predictive maintenance data set to understand the utilization of plant machines
 
 ## Steps
 1. Load the necessary R libraries
 2. Load the average utilization summary data
 3. Plot the average utilization summary data
 4. Quick observations
-5. A closer look at each of the 2 stations
+5. A closer look at each of the 2 machines(stations)
 6. Station-1 how does the utilization look over a period of 1 year
 7. Quick observations on Station-1
 8. Station-2 how does the utilization look over a period of 1 year
@@ -39,7 +39,7 @@ library(tidyr)
 
 ### 2. Load the average utilization summary data
 
-The raw data sets consists of observations of two stations across 3 shifts and its utilization over a period of 1 year. The raw data was processed and features like "day of the week" was added to get a quick understanding of any plant behavior patterns.
+The raw data sets consists of observations of two machines across 3 shifts and its utilization over a period of 1 year. The raw data was processed and features like "day of the week" was added to get a quick understanding of any plant behavior patterns.
 
 ```{r tidy=TRUE}
 df1 <- read.csv("../data/eda-pm-ds1/station1n2-avgUtilization.csv")
@@ -48,7 +48,7 @@ names(df1)[2]<-"avgUtilization"
 
 ### 3. Plot the average utilization summary data
 
-Plotting the average utilization of all stations for each day of the week help us to understand if there are any weekly cycles
+Plotting the average utilization of all machines for each day of the week help us to understand if there are any weekly cycles
 
 ```{r tidy=TRUE}
 annotation  <- data.frame(x=c(6,7),y=c(17,5),label=c("reduced shifts?","holiday?"))
@@ -69,8 +69,8 @@ What we can infer from the above plot is:
 1. On a Sunday there is little or no activity across the shifts, possibly it may be holiday
 2. On a Saturday there is some reduction in shifts as a result the average is lower then the rest of the week days
 
-### 5. A closer look at each of the 2 stations
-Let us take a closer look at each of the two stations independently
+### 5. A closer look at each of the 2 machines
+Let us take a closer look at each of the two machines independently
 
 * Station-1
 * Station-2
