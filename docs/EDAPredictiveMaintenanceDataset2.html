@@ -383,7 +383,16 @@ library(tidyr)</code></pre>
 <h3>2. Load the average utilization summary data</h3>
 <p>The raw data sets consists of observations of two stations across 3 shifts and its utilization over a period of 1 year. The raw data was processed and features like “day of the week” was added to get a quick understanding of any plant behavior patterns.</p>
 <pre class="r"><code>df1 &lt;- read.csv(&quot;../data/eda-pm-ds1/station1n2-avgUtilization.csv&quot;)
-names(df1)[2]&lt;-&quot;avgUtilization&quot;</code></pre>
+names(df1)[2]&lt;-&quot;avgUtilization&quot;
+df1</code></pre>
+<pre><code>##   weekDayName avgUtilization
+## 1         Mon             26
+## 2         Tue             29
+## 3         Wed             27
+## 4         Thu             26
+## 5         Fri             26
+## 6         Sat             16
+## 7         Sun              4</code></pre>
 </div>
 </div>
 
