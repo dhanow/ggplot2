@@ -15,4 +15,4 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Overview
-In the below exercise EDA is performed on a predictive maintenance data set to understand the data
+In the below exercise EDA is performed on a predictive maintenance data set to understand the data "hello"
