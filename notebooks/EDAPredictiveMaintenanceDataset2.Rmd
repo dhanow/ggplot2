@@ -1,10 +1,10 @@
 ---
-title: "EDA Predictive Maintenance Dataset2"
+title: "EDA Predictive Maintenance Dataset 2"
 knit: (function(input_file, encoding) {
   out_dir <- '../docs';
   rmarkdown::render(input_file,
  encoding=encoding,
- output_file=file.path(dirname(input_file), out_dir, 'EDAPredictiveMaintenancedataset2.html'))})
+ output_file=file.path(dirname(input_file), out_dir, 'EDAPredictiveMaintenanceDataset2.html'))})
 author: "Sridhar Kothalanka"
 date: "2/20/2020"
 output: html_document
@@ -14,24 +14,22 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Overview
-In the below exercise EDA is performed on a predictive maintenance data set to understand the data "hello"
+## R Markdown
 
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-### 1. Load the necessary R libraries
-```{r results="hide", message=FALSE, warning=FALSE, error=FALSE}
-library(ggplot2)
-library(magrittr)
-library(dplyr)
-library(tidyr)
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
 ```
 
-### 2. Load the average utilization summary data
+## Including Plots
 
-The raw data sets consists of observations of two stations across 3 shifts and its utilization over a period of 1 year. The raw data was processed and features like "day of the week" was added to get a quick understanding of any plant behavior patterns.
+You can also embed plots, for example:
 
-```{r tidy=TRUE}
-df1 <- read.csv("../data/eda-pm-ds1/station1n2-avgUtilization.csv")
-names(df1)[2]<-"avgUtilization"
-df1
+```{r pressure, echo=FALSE}
+plot(pressure)
 ```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
