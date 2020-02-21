@@ -84,11 +84,11 @@ df2 <- read.csv("../data/eda-pm-ds1/station1.csv") %>%
 df2$Shift <- factor(df2$Shift,levels=c("Shift1","Shift2","Shift3"))
 
 dfx <- df2 %>% filter(df2$Shift == "Shift1" & df2$weekDayName != "Sun") %>% select(utilization)
-shift1AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+shift1AvgExSun2 <- mean(dfx$utilization, na.rm = TRUE)
 dfx <- df2 %>% filter(df2$Shift == "Shift2" & df2$weekDayName != "Sun") %>% select(utilization)
-shift2AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+shift2AvgExSun2 <- mean(dfx$utilization, na.rm = TRUE)
 dfx <- df2 %>% filter(df2$Shift == "Shift3" & df2$weekDayName != "Sun") %>% select(utilization)
-shift3AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+shift3AvgExSun2 <- mean(dfx$utilization, na.rm = TRUE)
 
 df2 %>% 
   ggplot(aes(x=factor(df2$weekDayName,levels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")), y=utilization,fill=Shift)) + 
@@ -102,10 +102,10 @@ df2 %>%
   theme(legend.title=element_blank()) +
   annotate(geom="curve",x=6.5,y=8,xend=7.1, yend=5, curvature=0.3, arrow=arrow(length=unit(2,"mm"))) +
   annotate(geom="text",x=6.25,y=12,label="shift3 utilization \ngoes up before \nworkweek",hjust="left") +
-  geom_hline(yintercept=shift1AvgExSun, linetype="dashed", color = "#00BFC4", size=1) +
-  geom_hline(yintercept=shift2AvgExSun, linetype="dashed", color = "#7CAE00", size=1) +
-  geom_hline(yintercept=shift3AvgExSun, linetype="dashed", color = "#F8766D", size=1) +
-  annotate(geom="text",x=6.75,y=shift1AvgExSun+1,label="avg (M-F)",hjust="left")
+  geom_hline(yintercept=shift1AvgExSun2, linetype="dashed", color = "#00BFC4", size=1) +
+  geom_hline(yintercept=shift2AvgExSun2, linetype="dashed", color = "#7CAE00", size=1) +
+  geom_hline(yintercept=shift3AvgExSun2, linetype="dashed", color = "#F8766D", size=1) +
+  annotate(geom="text",x=6.75,y=shift1AvgExSun2+1,label="avg (M-F)",hjust="left")
   
 ```
 
@@ -122,11 +122,11 @@ df3 <- read.csv("../data/eda-pm-ds1/station2.csv") %>%
 df3$Shift <- factor(df3$Shift,levels=c("Shift1","Shift2","Shift3"))
 
 dfx <- df3 %>% filter(df3$Shift == "Shift1" & df3$weekDayName != "Sun") %>% select(utilization)
-shift1AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+shift1AvgExSun3 <- mean(dfx$utilization, na.rm = TRUE)
 dfx <- df3 %>% filter(df3$Shift == "Shift2" & df3$weekDayName != "Sun") %>% select(utilization)
-shift2AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+shift2AvgExSun3 <- mean(dfx$utilization, na.rm = TRUE)
 dfx <- df3 %>% filter(df3$Shift == "Shift3" & df3$weekDayName != "Sun") %>% select(utilization)
-shift3AvgExSun <- mean(dfx$utilization, na.rm = TRUE)
+shift3AvgExSun3 <- mean(dfx$utilization, na.rm = TRUE)
 
 df3 %>% 
   ggplot(aes(x=factor(df3$weekDayName,levels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")), y=utilization,fill=Shift)) + 
@@ -140,10 +140,10 @@ df3 %>%
   theme(legend.title=element_blank()) +
   annotate(geom="curve",x=6.5,y=12,xend=7.1, yend=10, curvature=0.3, arrow=arrow(length=unit(2,"mm"))) +
   annotate(geom="text",x=6.25,y=16,label="shift3 utilization \ngoes up before \nworkweek",hjust="left") +
-  geom_hline(yintercept=shift1AvgExSun, linetype="dashed", color = "#00BFC4", size=1) +
-  geom_hline(yintercept=shift2AvgExSun, linetype="dashed", color = "#7CAE00", size=1) +
-  geom_hline(yintercept=shift3AvgExSun, linetype="dashed", color = "#F8766D", size=1) +
-  annotate(geom="text",x=6.75,y=shift1AvgExSun+1,label="avg (M-F)",hjust="left")
+  geom_hline(yintercept=shift1AvgExSun3, linetype="dashed", color = "#00BFC4", size=1) +
+  geom_hline(yintercept=shift2AvgExSun3, linetype="dashed", color = "#7CAE00", size=1) +
+  geom_hline(yintercept=shift3AvgExSun3, linetype="dashed", color = "#F8766D", size=1) +
+  annotate(geom="text",x=6.75,y=shift1AvgExSun3+1,label="avg (M-F)",hjust="left")
 ```
 
 ### 9. Quick observations on Station-2
@@ -161,6 +161,10 @@ df4$Shift[df4$Shift == 1] <- "Shift1"
 df4$Shift[df4$Shift == 2] <- "Shift2"
 df4$Shift[df4$Shift == 3] <- "Shift3"
 
+avgShift1Lines <- data.frame(Station_ID = c("Station-1", "Station-2"), Z = c(shift1AvgExSun2,shift1AvgExSun3))
+avgShift2Lines <- data.frame(Station_ID = c("Station-1", "Station-2"), Z = c(shift2AvgExSun2, shift2AvgExSun3))
+avgShift3Lines <- data.frame(Station_ID = c("Station-1", "Station-2"), Z = c(shift3AvgExSun2, shift3AvgExSun3))
+
 df4 %>% 
   ggplot(aes(x=factor(df4$weekDayName,levels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")), y=avgUtilization,fill=Shift)) + 
   geom_bar(position="dodge",stat="identity") +
@@ -169,7 +173,10 @@ df4 %>%
   scale_fill_manual("legend", values = c("Shift1" = "#00BFC4", "Shift2" = "#7CAE00", "Shift3" = "#F8766D")) +
   ggtitle("Station-1 and Station-2 side-by-side comparison") +
   theme(legend.title=element_blank()) +
-  facet_grid(~Station_ID) 
+  facet_grid(~Station_ID) +
+  geom_hline(data = avgShift1Lines, aes(yintercept = Z),linetype="dashed", color = "#00BFC4", size=1) +
+  geom_hline(data = avgShift2Lines, aes(yintercept = Z),linetype="dashed", color = "#7CAE00", size=1) +
+  geom_hline(data = avgShift3Lines, aes(yintercept = Z),linetype="dashed", color = "#F8766D", size=1) 
 ```  
 
 
