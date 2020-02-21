@@ -1,0 +1,185 @@
+---
+title: "Plant Machine Downtime Analysis"
+knit: (function(input_file, encoding) {
+  out_dir <- '../docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'PlantMachineDowntimeAnalysis.html'))})
+author: "Sridhar Kothalanka"
+date: "2/21/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+###Overview
+In the below exercise EDA is performed on a dataset to understand the machine downtime cycles. The goal is to look at the charts and find out any hidden patterns in the dataset that help ask more questions to the domain expert.
+
+## Steps
+1. Load the necessary R libraries
+2. Load the data
+3. Plot the data for Station-1
+4. Quick observations
+5. Repeat plotting for rest of the machines
+  + Station-2
+  + Station-3
+  + Station-4
+  + Station-5
+  + Station-6
+6. Side-by-Side comparison of all machines
+7. Summary
+
+### 1. Load the necessary R libraries
+```{r results="hide", message=FALSE, warning=FALSE, error=FALSE}
+library(ggplot2)
+library(magrittr)
+library(dplyr)
+library(tidyr)
+```
+
+### 2. Load the data
+The raw data sets consists of observations of 6 machines across 3 shifts and its utilization over a period of 1 year. The raw data was processed and features like "day of the week" was added to get a quick understanding of any machine downtime patterns.
+
+```{r}
+df1 <- read.csv("../data/eda-pm-ds2/Station1-type1-1.csv") 
+df1$WRK_DAY3 <- as.Date(df1$WRK_DAY2 , format = "%m/%d/%y")
+df1 <- df1 %>% select(-c("WRK_DAY2"))
+df1
+```
+
+### 3. Plot the data for Station-1
+
+```{r}
+df1 <- read.csv("../data/eda-pm-ds2/Station2-type1-1.csv") 
+df1$WRK_DAY3 <- as.Date(df1$WRK_DAY2 , format = "%m/%d/%y")
+df1 <- df1 %>% select(-c("WRK_DAY2"))
+#df1 <- df1 %>% filter(df1$WRK_DAY3 >= as.Date("2020-10-20") && df1$WRK_DAY3 <= as.Date("2020-10-30"))
+#df1 <- df1 %>% filter(df1$WRK_DAY3 >= as.Date("2020-10-20"))
+df1 <- df1 %>% filter(df1$WRK_DAY3 >= as.Date("2020-10-01") & df1$WRK_DAY3 <= as.Date("2020-10-30"))
+ggplot(df1, aes(x=WRK_DAY3,y=useHrs,color=factor(maintFlag))) + 
+  scale_color_manual("Mode", values = c("0" = "#00BFC4", "1" = "#F8766D"),labels = c("Production", "Maintenance")) +
+  geom_line() +
+  ylim(0,24) +
+  xlab("Day of week") +
+  ylab("Hours in a day") +
+  ggtitle("Station-1 production and maintenance cycles")
+
+```
+
+### 4. Quick observations
+In the below chart you can observe the following:
+
+1. The production cycle follows the maintenance cycle
+2. The minimum hours the machine is used in maintenance mode is 5, max hours is 24
+3. The minimum hours the machine is used in production mode is 10, max hours is 24
+
+### 5. Repeat plotting for all stations
+
+* Stations
+  + Station-2
+  + Station-3
+  + Station-4
+  + Station-5
+  + Station-6
+To observe if the pattern repeates itself
+
+#### Station-2
+
+```{r}
+df1 <- read.csv("../data/eda-pm-ds2/Station2-type1-1.csv") 
+df1$WRK_DAY3 <- as.Date(df1$WRK_DAY2 , format = "%m/%d/%y")
+df1 <- df1 %>% select(-c("WRK_DAY2"))
+df1 <- df1 %>% filter(df1$WRK_DAY3 >= as.Date("2020-08-01"))
+ggplot(df1, aes(x=WRK_DAY3,y=useHrs,color=factor(maintFlag))) + 
+    scale_color_manual("Mode", values = c("0" = "#00BFC4", "1" = "#F8766D"),labels = c("Production", "Maintenance")) +
+    geom_line() +
+    ylim(0,24) +
+    ggtitle("Station-2 production and maintenance cycles")
+  
+```
+
+#### Station-3
+
+```{r}
+df1 <- read.csv("../data/eda-pm-ds2/Station3-type1-1.csv") 
+df1$WRK_DAY3 <- as.Date(df1$WRK_DAY2 , format = "%m/%d/%y")
+df1 <- df1 %>% select(-c("WRK_DAY2"))
+df1 <- df1 %>% filter(df1$WRK_DAY3 >= as.Date("2020-08-01"))
+ggplot(df1, aes(x=WRK_DAY3,y=useHrs,color=factor(maintFlag))) + 
+    scale_color_manual("Mode", values = c("0" = "#00BFC4", "1" = "#F8766D"),labels = c("Production", "Maintenance")) +
+    geom_line() +
+    ylim(0,24) +
+    ggtitle("Station-3 production and maintenance cycles")
+```
+
+#### Station-4
+
+```{r}
+df1 <- read.csv("../data/eda-pm-ds2/Station4-type1-1.csv") 
+df1$WRK_DAY3 <- as.Date(df1$WRK_DAY2 , format = "%m/%d/%y")
+df1 <- df1 %>% select(-c("WRK_DAY2"))
+df1 <- df1 %>% filter(df1$WRK_DAY3 >= as.Date("2020-08-01"))
+ggplot(df1, aes(x=WRK_DAY3,y=useHrs,color=factor(maintFlag))) + 
+    scale_color_manual("Mode", values = c("0" = "#00BFC4", "1" = "#F8766D"),labels = c("Production", "Maintenance")) +
+    geom_line() +
+    ylim(0,24) +
+    ggtitle("Station-4 production and maintenance cycles")
+```
+
+#### Station-5
+
+```{r}
+df1 <- read.csv("../data/eda-pm-ds2/Station5-type1-1.csv") 
+df1$WRK_DAY3 <- as.Date(df1$WRK_DAY2 , format = "%m/%d/%y")
+df1 <- df1 %>% select(-c("WRK_DAY2"))
+df1 <- df1 %>% filter(df1$WRK_DAY3 >= as.Date("2020-08-01"))
+ggplot(df1, aes(x=WRK_DAY3,y=useHrs,color=factor(maintFlag))) + 
+    scale_color_manual("Mode", values = c("0" = "#00BFC4", "1" = "#F8766D"),labels = c("Production", "Maintenance")) +
+    geom_line() +
+    ylim(0,24) +
+    ggtitle("Station-5 production and maintenance cycles")
+```
+
+#### Station-6
+
+```{r}
+df1 <- read.csv("../data/eda-pm-ds2/Station6-type1-1.csv") 
+df1$WRK_DAY3 <- as.Date(df1$WRK_DAY2 , format = "%m/%d/%y")
+df1 <- df1 %>% select(-c("WRK_DAY2"))
+df1 <- df1 %>% filter(df1$WRK_DAY3 >= as.Date("2020-08-01"))
+ggplot(df1, aes(x=WRK_DAY3,y=useHrs,color=factor(maintFlag))) + 
+    scale_color_manual("Mode", values = c("0" = "#00BFC4", "1" = "#F8766D"),labels = c("Production", "Maintenance")) +
+    geom_line() +
+    ylim(0,24) +
+    ggtitle("Station-6 production and maintenance cycles")
+```
+
+### 6. Side-by-Side comparison of all machines
+
+```{r}
+df1 <- read.csv("../data/eda-pm-ds2/Stationall-type1-1.csv") 
+df1$WRK_DAY3 <- as.Date(df1$WRK_DAY2 , format = "%m/%d/%y")
+df1 <- df1 %>% select(-c("WRK_DAY2"))
+df1 <- df1 %>% filter(df1$WRK_DAY3 >= as.Date("2020-08-01"))
+ggplot(df1, aes(x=WRK_DAY3,y=useHrs,color=factor(maintFlag))) + 
+    scale_color_manual("Mode", values = c("0" = "#00BFC4", "1" = "#F8766D"),labels = c("Production", "Maintenance")) +
+    geom_line() +
+    ylim(0,24) +
+    facet_grid(~Station_ID)
+  
+```
+
+
+### 7. Summary
+
+1. Every production cycle is followed by a maintenance cycle or vice versa.
+2. Need to understand what maintenance is done on the machine, is it something that is mandatory or optional (preventive maintenance).
+3. If it is optional, is there any metric to detect that the machine is nearing its real maintenance cycle
+4. Inorder to build a model that can perform downtime, more features are needed beyond "utilization".
+5. Additionally when we have the right data the data needs to be labelled so that we can train a model to predict downtime of machines
+
+
+
+
