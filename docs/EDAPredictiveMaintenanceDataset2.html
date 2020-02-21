@@ -372,6 +372,19 @@ summary {
 <div id="overview" class="section level1">
 <h1>Overview</h1>
 <p>In the below exercise EDA is performed on a predictive maintenance data set to understand the data “hello”</p>
+<div id="load-the-necessary-r-libraries" class="section level3">
+<h3>1. Load the necessary R libraries</h3>
+<pre class="r"><code>library(ggplot2)
+library(magrittr)
+library(dplyr)
+library(tidyr)</code></pre>
+</div>
+<div id="load-the-average-utilization-summary-data" class="section level3">
+<h3>2. Load the average utilization summary data</h3>
+<p>The raw data sets consists of observations of two stations across 3 shifts and its utilization over a period of 1 year. The raw data was processed and features like “day of the week” was added to get a quick understanding of any plant behavior patterns.</p>
+<pre class="r"><code>df1 &lt;- read.csv(&quot;../data/eda-pm-ds1/station1n2-avgUtilization.csv&quot;)
+names(df1)[2]&lt;-&quot;avgUtilization&quot;</code></pre>
+</div>
 </div>
 
 
