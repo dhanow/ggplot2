@@ -28,6 +28,7 @@ In the below exercise EDA is performed on a predictive maintenance data set to u
 8. Station-2 how does the utilization look over a period of 1 year
 9. Quick observations on Station-2
 10. Station-1 and Station-2 side-by-side comparison
+11. Summary
 
 ### 1. Load the necessary R libraries
 ```{r results="hide", message=FALSE, warning=FALSE, error=FALSE}
@@ -110,8 +111,8 @@ df2 %>%
 ```
 
 ### 7. Quick observations on Station-1
-1. Utilization is below 100%
-2. Shift 3 seems to be contributing more towards the decrease in utilization
+1. Utilization is below 50% during each shift
+2. Shift 3 seems to utilizing the machines lesser than Shift 1 and 2
 3. As before Saturday is running reduced shifts and Sunday may be a holiday
 
 
@@ -147,8 +148,8 @@ df3 %>%
 ```
 
 ### 9. Quick observations on Station-2
-1. Utilization is below 100%
-2. Shift 3 seems to be contributing more towards the decrease in utilization
+1. Utilization is below 50% during each shift
+2. Shift 3 seems to utilizing the machines lesser than Shift 1 and 2
 3. As before Saturday is running reduced shifts and Sunday may be a holiday
 
 ### 10. Station-1 and Station-2 side-by-side comparison
@@ -178,5 +179,12 @@ df4 %>%
   geom_hline(data = avgShift2Lines, aes(yintercept = Z),linetype="dashed", color = "#7CAE00", size=1) +
   geom_hline(data = avgShift3Lines, aes(yintercept = Z),linetype="dashed", color = "#F8766D", size=1) 
 ```  
+
+### 11. Summary
+
+1. The dataset is limited in terms of the available features (only provides how the machines are utilized)
+2. If the data set can include the raw data used to compute utilization that may help broaden the analysis
+3. Additional data (metrics) points associated with the machines itself will help to build predictive maintenance models
+
 
 
