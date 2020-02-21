@@ -33,4 +33,5 @@ The raw data sets consists of observations of two stations across 3 shifts and i
 ```{r tidy=TRUE}
 df1 <- read.csv("../data/eda-pm-ds1/station1n2-avgUtilization.csv")
 names(df1)[2]<-"avgUtilization"
+df1
 ```
