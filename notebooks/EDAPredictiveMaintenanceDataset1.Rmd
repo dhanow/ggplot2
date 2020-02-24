@@ -1,5 +1,5 @@
 ---
-title: "Plant Machine Utilization analysis"
+title: "Machine Downtime analysis 1"
 knit: (function(input_file, encoding) {
   out_dir <- '../docs';
   rmarkdown::render(input_file,
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Overview
-In the below exercise EDA is performed on a predictive maintenance data set to understand the utilization of plant machines. The goal is to look at the charts and find out any hidden patterns in the dataset and help ask more questions to the domain expert.
+In the below exercise EDA is performed on a data set to understand machine downtime patterns. The goal is to look at the charts and find out any hidden patterns in the dataset this should help in asking more questions to the domain expert.This is a cyclic process and will be repeated multiple times before the dataset is finalized and an ML model is created.
 
 ## Steps
 1. Load the necessary R libraries

@@ -1,5 +1,5 @@
 ---
-title: "Plant Machine Downtime Analysis"
+title: "Machine Downtime Analysis 2"
 knit: (function(input_file, encoding) {
   out_dir <- '../docs';
   rmarkdown::render(input_file,
